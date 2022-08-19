@@ -1,0 +1,1835 @@
+openapi: '3.0.2'
+info:
+  title: 'graphql_engine'
+  version: "1.2.3"
+servers:
+  - url: https://srv-dev-project_name.be 
+    description: 'Development Server'
+    variables:
+      port:
+        default: '8080'
+      basePath:
+        default: V2    
+  - url: https://srv-dev-project_name.be 
+    description: 'Test Server'
+    variables:
+      port:
+        default: '8081'
+      basePath:
+        default: V2    
+  - url: https://srv-dev-project_name.be 
+    description: 'Acceptance Server'
+    variables:
+      port:
+        default: '8082'
+      basePath:
+        default: V2    
+  - url: https://project_name.be 
+    description: 'Production Server'
+    variables:
+      port:
+        default: '8080'
+      basePath:
+        default: V2   
+paths:
+  /console:
+    get:
+      responses:
+        '200': 
+          description: 'Admin Console to manage Hasura grapqh engine, database, permission'
+      security:
+        - cookieAuth: []
+      
+  /v1/graphql:
+    post:
+      security:
+        - bearerAuth: []
+      summary: 'graphql_engine'
+      description: 'method' 
+      requestBody:
+        content:
+          'application/text':
+            schema: 
+              oneOf:
+                - $ref: '#/components/schemas/Query'
+                - $ref: '#/components/schemas/Mutation'
+      parameters:
+        - name: 'x-hasura-role'
+          in: header
+          description: 'Client Application Role'
+          schema:
+            type: string
+            default: 'reader'
+      responses:
+        '200':
+          description: 'successfull operation'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  qat_address_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/address'
+                  qat_admin_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/admin_document'
+                  qat_application_language_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/application_language'
+                  qat_audit_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit'
+                  qat_audit_building_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_building'
+                  qat_audit_photo_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo'
+                  qat_audit_photo_metadata_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo_metadata'
+                  qat_audit_status_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_status'
+                  qat_building_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building'
+                  qat_building_field_values_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building_field_values'
+                  qat_category_location_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location'
+                  qat_category_location_form_config_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_config'
+                  qat_category_location_form_field_config_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_field_config'
+                  qat_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist'
+                  qat_checklist_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_document'
+                  qat_checklist_theme_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme'
+                  qat_checklist_theme_item_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item'
+                  qat_checklist_theme_item_remark_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item_remark'
+                  qat_checklist_theme_section_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_section'
+                  qat_checklist_theme_sub_section_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_sub_section'
+                  qat_entity_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/entity'
+                  qat_form_field_type_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/form_field_type'
+                  qat_interview_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/interview_document'
+                  qat_location_entity_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity'
+                  qat_location_entity_region_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity_region'
+                  qat_sub_category_location_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_category_location'
+                  qat_sub_theme_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_theme_template_checklist'
+                  qat_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_checklist'
+                  qat_template_theme_item_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item'
+                  qat_template_theme_item_remark_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item_remark'
+                  qat_theme_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/theme_template_checklist'
+                  qat_user_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/user'
+                  update_qat_address_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/address'
+                  update_qat_admin_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/admin_document'
+                  update_qat_application_language_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/application_language'
+                  update_qat_audit_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit'
+                  update_qat_audit_building_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_building'
+                  update_qat_audit_photo_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo'
+                  update_qat_audit_photo_metadata_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo_metadata'
+                  update_qat_audit_status_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_status'
+                  update_qat_building_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building'
+                  update_qat_building_field_values_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building_field_values'
+                  update_qat_category_location_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location'
+                  update_qat_category_location_form_config_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_config'
+                  update_qat_category_location_form_field_config_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_field_config'
+                  update_qat_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist'
+                  update_qat_checklist_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_document'
+                  update_qat_checklist_theme_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme'
+                  update_qat_checklist_theme_item_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item'
+                  update_qat_checklist_theme_item_remark_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item_remark'
+                  update_qat_checklist_theme_section_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_section'
+                  update_qat_checklist_theme_sub_section_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_sub_section'
+                  update_qat_entity_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/entity'
+                  update_qat_form_field_type_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/form_field_type'
+                  update_qat_interview_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/interview_document'
+                  update_qat_location_entity_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity'
+                  update_qat_location_entity_region_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity_region'
+                  update_qat_sub_category_location_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_category_location'
+                  update_qat_sub_theme_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_theme_template_checklist'
+                  update_qat_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_checklist'
+                  update_qat_template_theme_item_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item'
+                  update_qat_template_theme_item_remark_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item_remark'
+                  update_qat_theme_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/theme_template_checklist'
+                  update_qat_user_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/user'      
+                  insert_qat_address:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/address'
+                  insert_qat_admin_document:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/admin_document'
+                  insert_qat_application_language:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/application_language'
+                  insert_qat_audit:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit'
+                  insert_qat_audit_building:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_building'
+                  insert_qat_audit_photo:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo'
+                  insert_qat_audit_photo_metadata:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo_metadata'
+                  insert_qat_audit_status:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_status'
+                  insert_qat_building:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building'
+                  insert_qat_building_field_values:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building_field_values'
+                  insert_qat_category_location:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location'
+                  insert_qat_category_location_form_config:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_config'
+                  insert_qat_category_location_form_field_config:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_field_config'
+                  insert_qat_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist'
+                  insert_qat_checklist_document:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_document'
+                  insert_qat_checklist_theme:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme'
+                  insert_qat_checklist_theme_item:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item'
+                  insert_qat_checklist_theme_item_remark:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item_remark'
+                  insert_qat_checklist_theme_section:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_section'
+                  insert_qat_checklist_theme_sub_section:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_sub_section'
+                  insert_qat_entity:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/entity'
+                  insert_qat_form_field_type:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/form_field_type'
+                  insert_qat_interview_document:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/interview_document'
+                  insert_qat_location_entity:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity'
+                  insert_qat_location_entity_region:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity_region'
+                  insert_qat_sub_category_location:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_category_location'
+                  insert_qat_sub_theme_template_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_theme_template_checklist'
+                  insert_qat_template_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_checklist'
+                  insert_qat_template_theme_item:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item'
+                  insert_qat_template_theme_item_remark:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item_remark'
+                  insert_qat_theme_template_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/theme_template_checklist'
+                  insert_qat_user:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/user'      
+                  delete_qat_address_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/address'
+                  delete_qat_admin_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/admin_document'
+                  delete_qat_application_language_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/application_language'
+                  delete_qat_audit_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit'
+                  delete_qat_audit_building_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_building'
+                  delete_qat_audit_photo_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo'
+                  delete_qat_audit_photo_metadata_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_photo_metadata'
+                  delete_qat_audit_status_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/audit_status'
+                  delete_qat_building_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building'
+                  delete_qat_building_field_values_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/building_field_values'
+                  delete_qat_category_location_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location'
+                  delete_qat_category_location_form_config_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_config'
+                  delete_qat_category_location_form_field_config_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/category_location_form_field_config'
+                  delete_qat_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist'
+                  delete_qat_checklist_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_document'
+                  delete_qat_checklist_theme_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme'
+                  delete_qat_checklist_theme_item_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item'
+                  delete_qat_checklist_theme_item_remark_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_item_remark'
+                  delete_qat_checklist_theme_section_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_section'
+                  delete_qat_checklist_theme_sub_section_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/checklist_theme_sub_section'
+                  delete_qat_entity_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/entity'
+                  delete_qat_form_field_type_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/form_field_type'
+                  delete_qat_interview_document_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/interview_document'
+                  delete_qat_location_entity_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity'
+                  delete_qat_location_entity_region_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/location_entity_region'
+                  delete_qat_sub_category_location_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_category_location'
+                  delete_qat_sub_theme_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/sub_theme_template_checklist'
+                  delete_qat_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_checklist'
+                  delete_qat_template_theme_item_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item'
+                  delete_qat_template_theme_item_remark_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/template_theme_item_remark'
+                  delete_qat_theme_template_checklist_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/theme_template_checklist'
+                  delete_qat_user_by_pk:
+                    type: object
+                    properties:
+                      data: 
+                        $ref: '#/components/schemas/user'
+                  delete_qat_address:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/address'
+                  delete_qat_admin_document:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/admin_document'
+                  delete_qat_application_language:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/application_language'
+                  delete_qat_audit:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/audit'
+                  delete_qat_audit_building:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/audit_building'
+                  delete_qat_audit_photo:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/audit_photo'
+                  delete_qat_audit_photo_metadata:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/audit_photo_metadata'
+                  delete_qat_audit_status:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/audit_status'
+                  delete_qat_building:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/building'
+                  delete_qat_building_field_values:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/building_field_values'
+                  delete_qat_category_location:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/category_location'
+                  delete_qat_category_location_form_config:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/category_location_form_config'
+                  delete_qat_category_location_form_field_config:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/category_location_form_field_config'
+                  delete_qat_checklist:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist'
+                  delete_qat_checklist_document:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist_document'
+                  delete_qat_checklist_theme:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist_theme'
+                  delete_qat_checklist_theme_item:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist_theme_item'
+                  delete_qat_checklist_theme_item_remark:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist_theme_item_remark'
+                  delete_qat_checklist_theme_section:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist_theme_section'
+                  delete_qat_checklist_theme_sub_section:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/checklist_theme_sub_section'
+                  delete_qat_entity:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/entity'
+                  delete_qat_form_field_type:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/form_field_type'
+                  delete_qat_interview_document:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/interview_document'
+                  delete_qat_location_entity:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/location_entity'
+                  delete_qat_location_entity_region:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/location_entity_region'
+                  delete_qat_sub_category_location:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/sub_category_location'
+                  delete_qat_sub_theme_template_checklist:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/sub_theme_template_checklist'
+                  delete_qat_template_checklist:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/template_checklist'
+                  delete_qat_template_theme_item:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/template_theme_item'
+                  delete_qat_template_theme_item_remark:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/template_theme_item_remark'
+                  delete_qat_theme_template_checklist:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/theme_template_checklist'
+                  delete_qat_user:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:  
+                          $ref: '#/components/schemas/user'            
+                  qat_address:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/address'
+                  qat_admin_document:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/admin_document'
+                  qat_application_language:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/application_language'
+                  qat_audit:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/audit'
+                  qat_audit_building:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/audit_building'
+                  qat_audit_photo:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/audit_photo'
+                  qat_audit_photo_metadata:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/audit_photo_metadata'
+                  qat_audit_status:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/audit_status'
+                  qat_building:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/building'
+                  qat_building_field_values:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/building_field_values'
+                  qat_category_location:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/category_location'
+                  qat_category_location_form_config:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/category_location_form_config'
+                  qat_category_location_form_field_config:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/category_location_form_field_config'
+                  qat_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist'
+                  qat_checklist_document:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist_document'
+                  qat_checklist_theme:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist_theme'
+                  qat_checklist_theme_item:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist_theme_item'
+                  qat_checklist_theme_item_remark:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist_theme_item_remark'
+                  qat_checklist_theme_section:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist_theme_section'
+                  qat_checklist_theme_sub_section:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/checklist_theme_sub_section'
+                  qat_entity:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/entity'
+                  qat_form_field_type:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/form_field_type'
+                  qat_interview_document:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/interview_document'
+                  qat_location_entity:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/location_entity'
+                  qat_location_entity_region:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/location_entity_region'
+                  qat_sub_category_location:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/sub_category_location'
+                  qat_sub_theme_template_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/sub_theme_template_checklist'
+                  qat_template_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/template_checklist'
+                  qat_template_theme_item:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/template_theme_item'
+                  qat_template_theme_item_remark:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/template_theme_item_remark'
+                  qat_theme_template_checklist:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/theme_template_checklist'
+                  qat_user:
+                    type: object
+                    properties:
+                      data: 
+                        type: array
+                        items: 
+                          $ref: '#/components/schemas/user'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid  
+  schemas:
+    Query:
+      externalDocs:
+        url: https://hasura.io/docs/latest/graphql/core/databases/postgres/queries/index/
+      description: 'operation to get data'
+      type: string
+    Mutation:
+      description: 'operation to create, update or delete'
+      externalDocs: 
+        url: https://hasura.io/docs/latest/graphql/core/databases/postgres/mutations/index/
+      type: string
+    address:
+      description: 'address of location'
+      type: object
+      properties:
+        id: 
+          type: integer
+        street:
+          type: string
+        house_number:
+          type: string
+        box_number:
+          type: string
+        city:
+          type: string
+        location_entity_id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date
+    admin_document:
+      description: 'metada of admin document stored in file storage api'
+      type: object
+      properties:
+        id: 
+          type: integer
+        tag:
+          type: string
+        name_file:
+          type: string
+        application_language:
+          type: string
+        description:
+          type: string
+        type:
+          type: integer
+        url:
+          type: string
+        title_fr:
+          type: string
+        title_nl:
+          type: string
+        last_updated_date:
+          type: string
+          format: date  
+    application_language:
+      description: 'language code'
+      type: object
+      properties:
+        id:
+          type: integer
+        application_code:
+          type: string
+    audit:
+      description: 'main information of audit'
+      type: object
+      properties:
+        id: 
+          type: integer
+        auditor_email:
+          type: string
+        entity_id:
+          type: integer
+        location_id:
+          type: integer
+        description:
+          type: string
+        type:
+          type: integer
+        url:
+          type: string
+        title_fr:
+          type: string
+        title_nl:
+          type: string
+        audit_date:
+          type: string
+          format: date  
+        creation_date:
+          type: string
+          format: date  
+        last_updated_date:
+          type: string
+          format: date  
+    audit_building:
+      type: object
+      properties:
+        id:
+          type: integer
+        audit_id:
+          type: integer
+        building_id: 
+          type: integer 
+    audit_photo:
+      type: object
+      properties:
+        id: 
+          type: integer
+        url:
+          type: string
+        mimetype:
+          type: string
+        audit_photot_metadata_id:
+          type: integer
+    audit_photo_metadata:
+      type: object
+      properties:
+        id: 
+          type: integer
+        audit_id:
+          type: string
+        checklist_id:
+          type: integer
+        theme_id:
+          type: integer
+        section_id:
+          type: integer
+    audit_status:
+      type: object
+      properties:
+        id:
+          type: integer
+    building:
+      type: object
+      properties:  
+        id:
+          type: object
+        address_id:
+          type: integer
+        sub_category_location_id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date
+        checklist_id:
+          type: integer
+        index:
+          type: integer  
+    building_field_values:
+      type: object
+      properties: 
+        id:
+          type: integer
+        category_location_form_field_config_id:
+          type: integer
+        value:
+          type: string
+        building_id:
+          type: integer
+    category_location:
+      type: object
+      properties: 
+        name_fr:
+          type: string
+        name_nl:
+          type: string
+        id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date
+    category_location_form_config:
+      type: object
+      properties:
+        id:
+          type: integer
+        category_location_id:
+          type: integer
+    category_location_form_field_config: 
+      type: object
+      properties:
+        id:
+          type: integer
+        form_field_type:
+          type: string
+        name_nl:
+          type: string
+        name_fr:
+          type: string
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date
+        is_required:
+          type: boolean
+        category_location_form_config_id:
+          type: integer
+    checklist:
+      type: object
+      properties:
+        id:
+          type: integer
+        form_field_type:
+          type: string
+        name_nl:
+          type: string
+        name_fr:
+          type: string
+        creation_date:
+          type: string
+        last_updated_date:
+          type: string
+        deleted_date:
+          type: string
+        is_required:
+          type: boolean 
+          default: false
+        category_location_form_config_id:
+          type: integer      
+    checklist_document:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        building_id:
+          type: integer    
+    checklist_theme:
+      type: object
+      properties:
+        id:
+          type: integer
+        comment:
+          type: string
+          description: field to make a comment about sections
+        checklist_id:
+          type: integer
+          description: relation with checklist
+        not_applicable:
+          type: boolean
+          default: false
+        theme_template_id:
+          type: integer
+        short_name_fr:
+          type: string
+          description: textfield to name (short format) in french checklist_theme
+        short_name_nl:
+          type: string
+          description: textfield to name (short format) in dutch checklist_theme
+        long_name_fr:
+          type: string
+          description: textfield to name (long format) in french checklist_theme
+        long_name_nl:
+          type: string
+          description: textfield to name (long format) in dutch checklist_theme
+        not_applicable_option:
+          type: boolean
+          default: false
+        duplicate_section_number:
+          type: integer
+          default: 1    
+    checklist_theme_item:
+      type: object
+      properties:
+        id:
+          type: integer
+        template_theme_item_id:
+          type: integer
+          description: Relation with item in template
+        not_application:
+          type: boolean
+          default: false
+          description: Represent a value if application or not application
+        has_interview:
+          type: boolean
+          default: false
+          description: Represent a value if they had interview or not
+        comment:
+          type: string
+          description: Represent comment
+        checklist_theme_section_id:
+          type: integer
+          description: Relation with section from checklist
+        checklist_theme_sub_section_id:
+          type: integer
+          description: Relation with sub section from checklist
+        is_conform:
+          type: boolean
+          description: Represent a value if is confirm or not
+        name_fr:
+          type: string
+          description: Text field to name in frecnh item
+        name_nl:
+          type: string
+          description: Text field to name in dutch item
+        norm_code:
+          type: string
+        page_pdf_nl:
+          type: integer
+        page_pdf_fr:
+          type: integer    
+    checklist_theme_item_remark:    
+      type: object
+      properties:
+        id:
+          type: integer
+        checklist_theme_item_id:
+          type: integer
+        template_theme_item_remark_id:
+          type: integer
+        checked:
+          type: boolean
+        name_fr:
+          type: string
+          description: Textfield to name in french the remark
+        name_nl:
+          type: string
+          description: Textfield to name in dutch the remark
+        index:
+          type: integer
+          description: index to order remark in view
+    checklist_theme_section:
+      type: object
+      properties:   
+        id:
+          type: integer
+        checklist_theme_id:
+          type: integer
+          description: relation with theme from checklist
+        specification:
+          type: string
+          description: Text field to identify a duplicated section
+        theme_template_checklist_id:
+          type: integer
+        name_fr:
+          type: string
+          description: Text field to name in frecnh section
+        name_nl:
+          type: string
+          description: Text field to name in deutsh section
+        no_application:
+          type: boolean
+    checklist_theme_sub_section:
+      type: object
+      properties:
+        id:
+          type: integer
+        checklist_theme_section_id:
+          type: integer
+          description: relation with theme in checklist, keep value from template sub theme
+        sub_theme_template_checklist_id:
+          type: integer
+          description: relation with sub theme in template
+        no_application:
+          type: boolean
+          default: false
+        name_fr:
+          type: string
+          description: Text field to name in french sub-section
+        name_nl:
+          type: string
+          description: Text field to name in frecnh sub-section
+        index:
+          type: integer
+          default: 0
+          description: index to order sub section in view
+        not_applicable_option:
+          type: boolean
+          default: false  
+    entity: 
+      type: object
+      properties:
+        label:
+          type: string
+        abbreviation:
+          type: string
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date with time zone
+        id:
+          type: integer
+    form_field_type:
+      type: object
+      properties:
+        id:
+          type: string
+    interview_document:
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        audit_id:
+          type: integer      
+    location_entity: 
+      type: object
+      properties:   
+        name:
+          type: string
+        entity_id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date with time zone
+        id:
+          type: integer
+        category_id:
+          type: integer
+        specification:
+          type: string
+        postal_code:
+          type: integer
+        region_id:
+          type: integer
+          default: 1
+    location_entity_region:
+      type: object
+      properties: 
+        id:
+          type: integer
+        label_fr:  
+          type: string
+          description: label in french
+        label_nl:
+          type: string
+    sub_category_location: 
+      type: object
+      properties:
+        name_nl:
+          type: string
+        name_fr:
+          type: string
+        category_location_id:
+          type: integer
+        id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date
+    sub_theme_template_checklist:
+      type: object
+      properties:
+        id:
+          type: integer
+        name_fr:
+          type: string
+        name_nl:
+          type: string
+        theme_template_checklist_id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date with time zone
+        index:
+          type: integer
+          default: 0
+        not_applicable_option:
+          type: boolean
+          default: false
+    template_checklist: 
+      type: object
+      properties:
+        id:
+          type: integer
+        name_fr:
+          type: string
+        name_nl:
+          type: string
+        category_location_id:
+          type: integer
+        sub_category_location_id:
+          type: integer
+        creation_date:
+          type: string
+          format: date
+        last_updated_date:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date with time zone
+    template_theme_item: 
+      type: object 
+      properties:
+        id:
+          type: integer
+        title_nl:
+          type: string
+          description: Titel of item in dutch
+        title_fr:
+          type: string
+          description: Titel of item in french
+        norm_code:
+          type: string
+          description: Reference of quality norm in french
+        information_nl:
+          type: string
+          description: Information of item in dutch
+        information_fr:
+          type: string
+          description: Information of item in french
+        not_application_option:
+          type: boolean
+          default: false
+          description: Option if the item is applicable or not
+        template_theme_id:
+          type: integer
+          description: Relation with theme from template
+        template_sub_theme_id:
+          type: integer
+          description: Relation with sub theme from template
+        deleted_at:
+          type: string
+          format: date
+          description: Date of delete
+    template_theme_item_remark:   
+      type: object 
+      properties:
+        id:
+          type: integer
+        template_theme_item_id:
+          type: integer
+          description: Relation with item from theme or sub theme
+        remark_text_nl:
+          type: string
+          description: Remark text in dutch
+        remark_text_fr:
+          type: string
+          description: Remark text in french
+        deleted_at:
+          type: string
+          format: date with time zone
+          description: Date of delete
+        updated_at:
+          type: string
+          format: date
+          description: Last update date
+        created_at:
+          type: string
+          format: date
+          description: Creation date
+        index:
+          type: integer
+          default: 0
+        last_updated_date:
+          type: string
+          format: date
+          description: Last update date
+    theme_template_checklist: 
+      type: object 
+      properties: 
+        id:
+          type: integer
+        short_name_fr:
+          type: string
+        short_name_nl:
+          type: string
+        long_name_fr:
+          type: string
+        long_name_nl:
+          type: string
+        not_applicable_option:
+          type: boolean
+        index:
+          type: integer
+          default: 0
+        template_checklist_id:
+          type: integer
+        duplicable:
+          type: boolean
+        created_at:
+          type: string
+          format: date
+        updated_at:
+          type: string
+          format: date
+        deleted_date:
+          type: string
+          format: date with time zone
+        duplicate_section_number:
+          type: integer
+          default: 1
+    user: 
+      type: object
+      properties:
+        id:
+          type: string
+        x_hasura_user_id:
+          type: string
+
+
+       
+
+
+
+          
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+                             
+
+  

@@ -1,0 +1,573 @@
+openapi: '3.0.2'
+info:
+  title: API File Storage
+  version: '1.0'
+servers:
+  - url: https://project_name.be
+    description: Production server
+    variables:
+      port: 
+        default: '8000'
+      basePath:
+        default: v2  
+  - url: https://srv-dev-project_name.be
+    description: Development server
+    variables:
+      port: 
+        default: '8000'
+      basePath:
+        default: v2       
+  - url: https://srv-dev-project_name.be
+    description: Test server
+    variables:
+      port: 
+        default: '8001'
+      basePath:
+        default: v2 
+  - url: https://srv-dev-project_name.be
+    description: Acceptance server
+    variables:
+      port: 
+        default: '8002'
+      basePath:
+        default: v2                      
+paths:
+  /login:
+    get:
+      security:
+        - cookieAuth: []
+      
+      responses:
+        '200':
+          description: "page to login in console"
+          content: 
+            'text/html': 
+              schema: 
+                $ref: '#/components/schemas/UserFormData'
+        '500':
+          description: 'Internal problem in server when the use go to console page'
+          content:
+            'text/html':
+              schema: 
+                $ref: '#/components/schemas/ErrorMessage'        
+        default:
+          description: "page to indicate problem (by default from navigator)"
+          content:
+            'text/html':
+                schema: 
+                  $ref: '#/components/schemas/ErrorMessage'
+    post:
+      security:
+        - cookieAuth: []
+      
+      description: "processus to login in console"
+      requestBody:
+         content:
+          multipart/form-data:
+            schema: 
+              $ref: '#/components/schemas/UserFormData'
+      responses:
+        '200':
+          description: "the use is login and redirect in console page"
+  /console/{file path}:
+    get:
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: file path
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'page to see file stored in api'
+          content:
+            'text/html':
+              schema: 
+                $ref: '#/components/schemas/File'
+        '401':
+          description: 'The user in not authorized, the user is redirect to login page'
+          content:
+            'text/html':
+              schema: 
+                $ref: '#/components/schemas/ErrorMessage' 
+        '500':
+          description: 'Internal problem in server when the use go to console page'
+          content:
+            'text/html':
+              schema: 
+                $ref: '#/components/schemas/ErrorMessage'                   
+        default:
+          description: "page to indicate problem (by default from navigator)"
+          content:
+            'text/html':
+                schema: 
+                  $ref: '#/components/schemas/ErrorMessage'
+  /file:
+    get:
+      security:
+        - bearerAuth: []
+      description: "Processus to get files main information from folder name"
+      responses:
+        '200':
+          description: "The API return main information (light) list of file"
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MainInforamtionFileForList'
+        '400':
+          description: "the user is informed that his bad request"
+          content:
+            "application/text":
+              schema:
+                default: "Bad Request"
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: "the user is informed that he is not authorized"
+          content:
+            "application/text":
+              schema:
+                default: "Not Authorized"
+                $ref: '#/components/schemas/ErrorMessage'  
+        '404':
+          description: "the user is informed not found context"
+          content:
+            "application/text":
+              schema:
+                default: "Not Found"
+                $ref: '#/components/schemas/ErrorMessage'  
+        '500':
+          description: "the user is informed internal server"
+          content:
+            "application/text":
+              schema:
+                default: "Internal Server"
+                $ref: '#/components/schemas/ErrorMessage'                   
+      parameters:
+        - name: folder
+          in: query
+          description: "parameter to indicate which folder the system get main information"    
+          required: true
+          schema:
+            type: string 
+
+    post:
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/File'
+      description: "processus to store file"
+      responses:
+        '200':
+          description: "the file is stored in server and the user receive JSON object with main information of file"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/FileStorageResponse'
+        '400':
+          description: "the user is informed that his bad request"
+          content:
+            "application/text":
+              schema:
+                default: "Bad Request"
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: "the user is informed that he is not authorized"
+          content:
+            "application/text":
+              schema:
+                default: "Not Authorized"
+                $ref: '#/components/schemas/ErrorMessage'  
+        '404':
+          description: "the user is informed not found context"
+          content:
+            "application/text":
+              schema:
+                default: "Not Found"
+                $ref: '#/components/schemas/ErrorMessage'  
+        '500':
+          description: "the user is informed internal server"
+          content:
+            "application/text":
+              schema:
+                default: "Internal Server"
+                $ref: '#/components/schemas/ErrorMessage'                   
+      parameters:
+        - name: folder
+          in: query
+          description: "parameter to indicate which folder the system will storage the file"    
+          required: true
+          schema:
+            type: string 
+        - name: filename
+          in: query
+          description: "filename of file to storage"    
+          required: true
+          schema:
+            type: string       
+    put:
+      security:
+        - bearerAuth: []
+      description: "processus to update file"
+      requestBody:
+         content:
+          multipart/form-data:
+            schema:
+             $ref: '#/components/schemas/FileFormData'
+      responses:
+        '200':
+          description: "the file is updated in server and the user receive JSON object with main information of file"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/FileStorageResponse'
+        '400':
+          description: "the user is informed that his bad request"
+          content:
+            "application/text":
+              schema:
+                default: "Bad Request"
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: "the user is informed that he is not authorized"
+          content:
+            "application/text":
+              schema:
+                default: "Not Authorized"
+                $ref: '#/components/schemas/ErrorMessage'  
+        '404':
+          description: "the user is informed not found context"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'  
+        '500':
+          description: "the user is informed internal server"
+          content:
+            "application/text":
+              schema:
+                default: "Internal Server"
+                $ref: '#/components/schemas/ErrorMessage'                   
+      parameters:
+        - name: folder
+          in: query
+          description: "parameter to indicate which folder the system will update the file"    
+          required: true
+          schema:
+            type: string 
+        - name: filename
+          in: path
+          description: "filename of file to update"    
+          required: true
+          schema:
+            type: string  
+    delete:
+      security:
+        - bearerAuth: []
+      description: "processus to delete file"
+      responses:
+        '200':
+          description: "the file is deleted in server and the user receive JSON object with main information of file"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/FileStorageResponse'
+        '400':
+          description: "the user is informed that his bad request"
+          content:
+            "application/text":
+              schema:
+                default: "Bad Request"
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: "the user is informed that he is not authorized"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'  
+        '404':
+          description: "the user is informed not found context"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'  
+        '500':
+          description: "the user is informed internal server"
+          content:
+            "application/text":
+              schema:
+                default: "Internal Server"
+                $ref: '#/components/schemas/ErrorMessage'                   
+      parameters:
+        - name: folder
+          in: query
+          description: "parameter to indicate which folder the system will delete the file"    
+          required: true
+          schema:
+            type: string 
+        - name: filename
+          in: path
+          description: "filename of file to delete"    
+          required: true
+          schema:
+            type: string       
+  /download/{file path}:
+    get:
+      security:
+        - bearerAuth: []
+      description: "processus to get file"
+      responses:
+        '200':
+          description: "the system return file"
+          content:
+            "application/file":
+              schema:
+                $ref: '#/components/schemas/File'
+        '400':
+          description: "the user is informed that his bad request"
+          content:
+            "application/text":
+              schema:
+                default: "Not Found"
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: "the user is informed that he is not authorized"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'  
+        '404':
+          description: "the user is informed not found context"
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'  
+        '500':
+          description: "the user is informed internal server"
+          content:
+            "application/text":
+              schema:
+                default: "Internal Server"
+                $ref: '#/components/schemas/ErrorMessage'   
+      parameters:
+        - name: file path
+          in: path
+          description: "filename of file to delete"    
+          required: true
+          schema:
+            type: string                                                                   
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid      
+  schemas:
+    ErrorMessage: 
+      description: "Error description"
+      type: string
+    BaseError:
+      description: "Object to describe error"
+      type: object
+      properties:
+        name: 
+          type: string          
+        statusCode: 
+          type: integer
+        isOperational: 
+          type: boolean
+        description: 
+          type: string
+        returnResponse: 
+          type: boolean
+        typeMessage: 
+          type: string 
+    Console500Error:
+      description: "Object to describe error in internal server context in admin console"
+      type: object
+      properties:
+        name: 
+          type: string          
+        statusCode: 
+          type: integer
+          default: 500
+        isOperational: 
+          type: boolean
+          default: true
+        description: 
+          type: string
+          default: "Internal Server"
+        returnResponse: 
+          type: boolean
+          default: true
+        typeMessage: 
+          type: string
+          default: 'CRITICAL'
+    Console401Error:
+      description: "Object to describe error in not authorized context in admin console"
+      properties:
+        name: 
+          type: string          
+        statusCode: 
+          type: integer
+          default: 401
+        isOperational: 
+          type: boolean
+          default: true
+        description: 
+          type: string
+          default: "Console Not Authorized"
+        returnResponse: 
+          type: boolean
+          default: false
+        typeMessage: 
+          type: string
+          default: 'INFO'
+      type: object
+    Api404Error:
+      description: "Object to describe error in bad request context in API"
+      type: object
+      properties:
+        name: 
+          type: string          
+        statusCode: 
+          type: integer
+          default: 404
+        isOperational: 
+          type: boolean
+          default: true
+        description: 
+          type: string
+          default: "Bad Request"
+        returnResponse: 
+          type: boolean
+          default: false
+        typeMessage: 
+          type: string
+          default: 'INFO'
+    Api401Error:
+      description: "Object to describe error not authorized context in API"
+      type: object
+      properties:
+        name: 
+          type: string          
+        statusCode: 
+          type: integer
+          default: 401
+        isOperational: 
+          type: boolean
+          default: true
+        description: 
+          type: string
+          default: "Not Authorized"
+        returnResponse: 
+          type: boolean
+          default: false
+        typeMessage: 
+          type: string
+          default: 'INFO'
+    Api400Error:
+      description: "Object to describe error innot found context in API"
+      type: object
+      properties:
+        name: 
+          type: string          
+        statusCode: 
+          type: integer
+          default: 400 
+        isOperational: 
+          type: boolean
+          default: true
+        description: 
+          type: string
+          default: 'Bad Request'
+        returnResponse: 
+          type: boolean
+          default: false
+        typeMessage: 
+          type: string
+          default: 'WARNING'                     
+    Api500Error:
+      description: "Object to describe error in internal server context in API"
+      type: object
+      properties:
+        name: 
+          type: string       
+        statusCode: 
+          type: integer
+          default: 500   
+        isOperational: 
+          type: boolean
+          default: true
+        description: 
+          type: string
+          default: 'Internal Server'
+        returnResponse: 
+          type: boolean
+          default: false
+        typeMessage: 
+          type: string
+          default: "CRITICAL"      
+    UserFormData:
+      description: "Form data to login user in console"
+      type: object
+      properties:
+        username: 
+          type: string
+        password:
+          type: string   
+    MainInforamtionFileForList:
+      description: "Object to describe file main information"
+      type: object
+      properties:
+        name:
+          type: string
+        path: 
+          type: string         
+    FileStorageResponse:
+      description: "Object to describe file main information"
+      type: object
+      properties:
+        fieldname:
+          type: string
+        originalname:
+          type: string    
+        encoding:
+          type: string    
+        mimetype:
+          type: string
+        destination:
+          type: string
+        filedname:  
+          type: string
+        path: 
+          type: string
+        size:
+          type: integer    
+    File:
+      description: "File binary"
+      type: string
+      format: binary
+    FileFormData: 
+      description: "form data to insert file binary"
+      type: object
+      properties:
+        file:
+          description: File binary"
+          type: string     
+          format: binary   
+        
+
+
+
+               
